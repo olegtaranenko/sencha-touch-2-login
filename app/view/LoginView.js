@@ -3,6 +3,10 @@ Ext.define("SimpleLogin.view.LoginView", {
 	xtype: 'loginForm',
 	id: 'loginForm',
 
+	requires: [
+		'Ext.field.Toggle'
+	],
+
 	config: {
 		title: 'Log in',
 		iconCls: 'user',
@@ -21,7 +25,7 @@ Ext.define("SimpleLogin.view.LoginView", {
 					{
 						xtype: 'emailfield',
 						name: 'email',
-						placeHolder: 'E-mail'
+						placeHolder: 'Username'
 					},
 					{
 						xtype: 'passwordfield',
@@ -31,7 +35,7 @@ Ext.define("SimpleLogin.view.LoginView", {
 					},
 					{
 						xtype: 'togglefield',
-						label: 'Remember User Name',
+						label: 'Remember username',
 						labelWidth: '60%',
 						name: 'keep'
 					}

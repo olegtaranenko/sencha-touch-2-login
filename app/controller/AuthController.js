@@ -1,5 +1,6 @@
 Ext.define('SimpleLogin.controller.AuthController', {
 	extend : 'Ext.app.Controller',
+	requires : ['Ext.form.FieldSet', 'Ext.field.Email', 'Ext.field.Password'],
 
 	config : {
 
@@ -25,45 +26,34 @@ Ext.define('SimpleLogin.controller.AuthController', {
 	launch : function() {
 		var me = this;
 
-/*
 		Ext.ModelMgr.getModel('SimpleLogin.model.CurrentUser').load(1, {
 			scope : this,
 			success : function(cachedLoggedInUser) {
-				// do update instead of adding new rec
 				delete cachedLoggedInUser.phantom;
 				// fill up the store.
-				var store = Ext.getStore('CurrentUser');
-				store.add(cachedLoggedInUser);
+//				var store = Ext.getStore('CurrentUser');
+//				store.add(cachedLoggedInUser);
 
-				log.info('Auto-Login succeeded.');
-				// user is logged in already, do what is needed:
-				var companiesStore = Ext.getStore('CurrentUserCompany');
-				companiesStore.load( {
-					scope: this,
-					callback: function() {
-						this.logUserIn(cachedLoggedInUser);
-					}
-				});
-
+				console.info('Auto-Login succeeded.');
 
 			},
 			failure : function() {
-				log.warn('Auto-Login failed (user was not logged in).');
+				console.warn('Auto-Login failed (user was not logged in).');
 				// user is not logged in, show the login
-				SimpleLogin.app.switchMainView('SimpleLogin.view.main.LoginView');
+				SimpleLogin.app.switchMainView('SimpleLogin.view.LoginView');
 			}
 		});
-*/
 	},
 
 	doLogin : function() {
-		UiHelper.startLoading(Ext.Viewport, true);
+/*
 		this.getLoginForm().submit({
 			url : SimpleLogin.app.getApiUrl('/authorizations', true),
 			success : this.handleLoginSuccess,
 			failure : this.handleLoginFailure,
 			scope : this
 		});
+*/
 	},
 
 	handleLoginSuccess : function(form, response) {
@@ -95,14 +85,8 @@ Ext.define('SimpleLogin.controller.AuthController', {
 
 					locale : locale,
 					uses12HourClock: uses12HourClock,
-					timezone : user.timezone,
+					timezone : user.timezone
 
-					defaultCompanyId : defaultCompanyId,
-					companies : authorization,
-					session: {
-						selectedCompanyId: defaultCompanyId,
-						uses12HourClock: uses12HourClock
-					}
 				}),
 				userStore = Ext.getStore('CurrentUser');
 

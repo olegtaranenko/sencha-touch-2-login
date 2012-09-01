@@ -9,6 +9,9 @@ Ext.application({
 		'AuthController'
 	],
 
+	models: [
+		'CurrentUser'
+	],
 	views: ['LoginView'],
 
 	icon: {
