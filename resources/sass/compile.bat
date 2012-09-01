@@ -1,0 +1,3 @@
+@echo Runing Compass Compile for Simple Login project...
+@call compass compile -s expanded --force
+@echo ... done

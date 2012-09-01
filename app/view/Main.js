@@ -1,49 +1,42 @@
 Ext.define("SimpleLogin.view.Main", {
-    extend: 'Ext.tab.Panel',
-    requires: [
-        'Ext.TitleBar',
-        'Ext.Video'
-    ],
-    config: {
-        tabBarPosition: 'bottom',
+	extend: 'Ext.form.Panel',
+	xtype: 'loginForm',
+	id: 'loginForm',
 
-        items: [
-            {
-                title: 'Welcome',
-                iconCls: 'home',
+	config: {
+		title: 'Log in',
+		iconCls: 'user',
+		items: [
+			{
+				html: '<div class="simple-login-logo">Simple Login</div>'
+			},
+			{
+				xtype: 'fieldset',
+				iconCls: 'home',
+				defaults: {
+					labelWidth: '40%'
+				},
 
-                styleHtmlContent: true,
-                scrollable: true,
+				items: [
+					{
+						xtype: 'emailfield',
+						name: 'email',
+						placeHolder: 'E-mail'
+					},
+					{
+						xtype: 'passwordfield',
+						id: 'loginPasswordField',
+						name: 'password',
+						placeHolder: 'Password'
+					}
+				]
 
-                items: {
-                    docked: 'top',
-                    xtype: 'titlebar',
-                    title: 'Welcome to Sencha Touch 2'
-                },
-
-                html: [
-                    "You've just generated a new Sencha Touch 2 project. What you're looking at right now is the ",
-                    "contents of <a target='_blank' href=\"app/view/Main.js\">app/view/Main.js</a> - edit that file ",
-                    "and refresh to change what's rendered here."
-                ].join("")
-            },
-            {
-                title: 'Get Started',
-                iconCls: 'action',
-
-                items: [
-                    {
-                        docked: 'top',
-                        xtype: 'titlebar',
-                        title: 'Getting Started'
-                    },
-                    {
-                        xtype: 'video',
-                        url: 'http://av.vimeo.com/64284/137/87347327.mp4?token=1330978144_f9b698fea38cd408d52a2393240c896c',
-                        posterUrl: 'http://b.vimeocdn.com/ts/261/062/261062119_640.jpg'
-                    }
-                ]
-            }
-        ]
-    }
+			},
+			{
+				xtype: 'button',
+				text: 'Log in',
+				ui: 'confirm'
+			}
+		]
+	}
 });
