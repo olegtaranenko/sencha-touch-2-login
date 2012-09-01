@@ -1,4 +1,4 @@
-Ext.define("SimpleLogin.view.Main", {
+Ext.define("SimpleLogin.view.LoginView", {
 	extend: 'Ext.form.Panel',
 	xtype: 'loginForm',
 	id: 'loginForm',
@@ -28,6 +28,12 @@ Ext.define("SimpleLogin.view.Main", {
 						id: 'loginPasswordField',
 						name: 'password',
 						placeHolder: 'Password'
+					},
+					{
+						xtype: 'togglefield',
+						label: 'Remember User Name',
+						labelWidth: '60%',
+						name: 'keep'
 					}
 				]
 

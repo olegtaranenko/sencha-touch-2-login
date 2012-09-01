@@ -33,7 +33,7 @@
      */
     "js": [
         {
-            "path": "sdk/sencha-touch-all.js"
+            "path": "sdk/sencha-touch.js"
         },
         {
             "path": "app.js",
