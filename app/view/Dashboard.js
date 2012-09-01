@@ -11,6 +11,15 @@ Ext.define('SimpleLogin.view.Dashboard', {
 		items: [{
 			xtype: 'titlebar',
 			docked: 'top'
+		}, {
+			xtype: 'fieldset',
+			items: [{
+				margin: 20,
+				xtype: 'button',
+				id: 'logOutButton',
+				ui: 'decline',
+				text: 'Log out'
+			}]
 		}]
 	}
 });

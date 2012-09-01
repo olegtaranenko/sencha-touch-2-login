@@ -38,14 +38,6 @@ Ext.application({
 		'1496x2048': 'resources/startup/1496x2048.png'
 	},
 
-	launch: function() {
-		// Destroy the #appLoadingIndicator element
-//		Ext.fly('appLoadingIndicator').destroy();
-
-		// Initialize the main view
-//		Ext.Viewport.add(Ext.create('SimpleLogin.view.LoginView'));
-	},
-
 	switchMainView: function(newView) {
 		if (this.currentMainView != false) {
 			Ext.Viewport.remove(this.currentMainView);

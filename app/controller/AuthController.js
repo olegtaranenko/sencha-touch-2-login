@@ -46,6 +46,40 @@ Ext.define('SimpleLogin.controller.AuthController', {
 		});
 	},
 
+
+	logOut: function() {
+		Ext.ModelMgr.getModel('SimpleLogin.model.CurrentUser').load(1, {
+				success: function(user) {
+
+					Ext.Msg.confirm('Confirm', 'Are you sure you want to log out?', function(confirmed) {
+						if (confirmed == 'yes') {
+							this.doLogout(user);
+						}
+					}, this);
+				},
+
+				failure: function() {
+					// this should not happen, nevertheless:
+					window.location.reload();
+				}
+
+			},
+			this
+		);
+	},
+
+
+	doLogout: function(user) {
+
+		user.erase({
+			success: function() {
+				window.location.reload();
+			}
+		});
+	},
+
+
+
 	doLogin : function() {
 	},
 
