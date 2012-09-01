@@ -12,6 +12,12 @@ Ext.application({
 	models: [
 		'CurrentUser'
 	],
+
+	stores: [
+		'CurrentUser'
+	],
+
+
 	views: ['LoginView'],
 
 	icon: {
@@ -34,10 +40,10 @@ Ext.application({
 
 	launch: function() {
 		// Destroy the #appLoadingIndicator element
-		Ext.fly('appLoadingIndicator').destroy();
+//		Ext.fly('appLoadingIndicator').destroy();
 
 		// Initialize the main view
-		Ext.Viewport.add(Ext.create('SimpleLogin.view.LoginView'));
+//		Ext.Viewport.add(Ext.create('SimpleLogin.view.LoginView'));
 	},
 
 	switchMainView: function(newView) {
