@@ -24,12 +24,11 @@ Ext.define("SimpleLogin.view.LoginView", {
 				items: [
 					{
 						xtype: 'emailfield',
-						name: 'email',
+						name: 'username',
 						placeHolder: 'Username'
 					},
 					{
 						xtype: 'passwordfield',
-						id: 'loginPasswordField',
 						name: 'password',
 						placeHolder: 'Password'
 					},
@@ -37,7 +36,7 @@ Ext.define("SimpleLogin.view.LoginView", {
 						xtype: 'togglefield',
 						label: 'Remember username',
 						labelWidth: '60%',
-						name: 'keep'
+						name: 'keepUser'
 					}
 				]
 

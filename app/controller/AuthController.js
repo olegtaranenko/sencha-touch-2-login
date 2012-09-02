@@ -7,17 +7,18 @@ Ext.define('SimpleLogin.controller.AuthController', {
 		loggedUserId: null,
 
 		refs : {
-			'emailField': '#loginEmailField',
-			'passwordField': '#loginPasswordField',
-			'logOutButton': '#logOutButton',
-			'loginForm': 'loginForm'
+			usernameCt: 'loginForm [name=username]',
+			passwordCt: 'loginForm [name=password]',
+			logOutButton: 'dashboard [action=logout]',
+			keepUserCt: 'loginForm [name=keepUser]',
+			loginForm: 'loginForm'
 		},
 		control : {
 			'logOutButton': {
-				tap: 'logOut'
+				tap: 'onLogoutTap'
 			},
 			'loginForm button' : {
-				tap: 'doLogin'
+				tap: 'onLoginTap'
 			}
 		}
 	},
@@ -34,8 +35,20 @@ Ext.define('SimpleLogin.controller.AuthController', {
 				var store = Ext.getStore('CurrentUser');
 				store.add(cachedLoggedInUser);
 
-				console.info('Auto-Login succeeded.');
-				this.logUserIn(cachedLoggedInUser);
+				var prevLoginTime = cachedLoggedInUser.get('loginTime'),
+					now = new Date(),
+					interval = now - prevLoginTime;
+
+
+				if (interval <= SimpleLogin.app.sessionTimeout) {
+					console.info('Auto-Login succeeded.');
+					this.logUserIn(cachedLoggedInUser);
+				} else {
+					console.warn('Session Timeout');
+					SimpleLogin.app.switchMainView('SimpleLogin.view.LoginView', {
+						username: cachedLoggedInUser.get('name')
+					});
+				}
 
 			},
 			failure : function() {
@@ -47,7 +60,7 @@ Ext.define('SimpleLogin.controller.AuthController', {
 	},
 
 
-	logOut: function() {
+	onLogoutTap: function() {
 		Ext.ModelMgr.getModel('SimpleLogin.model.CurrentUser').load(1, {
 				success: function(user) {
 
@@ -70,7 +83,6 @@ Ext.define('SimpleLogin.controller.AuthController', {
 
 
 	doLogout: function(user) {
-
 		user.erase({
 			success: function() {
 				window.location.reload();
@@ -78,16 +90,53 @@ Ext.define('SimpleLogin.controller.AuthController', {
 		});
 	},
 
+	checkCredentials: function(username, password) {
+		var checked = !Ext.isEmpty(password) && !Ext.isEmpty(username),
+			ret = {
+				ok: checked,
+				username: username
+			};
 
-
-	doLogin : function() {
+		return ret;
 	},
 
-	handleLoginSuccess : function(form, response) {
+	onLoginTap: function() {
+		var usernameCt = this.getUsernameCt(),
+			passwordCt = this.getPasswordCt(),
+			credentials = this.checkCredentials(usernameCt.getValue(), passwordCt.getValue());
+
+		if (credentials.ok) {
+			this.handleLoginSuccess(credentials)
+		} else {
+			this.handleLoginFailure();
+		}
+	},
+
+	handleLoginSuccess: function(credentials) {
+		var user = Ext.create('SimpleLogin.model.CurrentUser', {
+			id: 1,
+			name: credentials.username,
+			loginTime: (new Date()).valueOf()
+		});
+
+		var keepUserCt = this.getKeepUserCt(),
+			keepUser = keepUserCt.getValue();
+
+		if (keepUser) {
+			user.save({
+				success: function() {
+					this.logUserIn(user);
+				}
+			}, this);
+		} else {
+			this.logUserIn(user);
+		}
 	},
 
 	handleLoginFailure : function() {
-		this.getLoginForm().down('passwordfield').setValue('');
+		var passwordCt = this.getPasswordCt();
+
+		passwordCt.setValue('');
 		Ext.Msg.alert('Error', 'We could not log you in.', Ext.emptyFn);
 	},
 
@@ -97,6 +146,8 @@ Ext.define('SimpleLogin.controller.AuthController', {
 
 		console.log('logUserIn: ', savedCurrentUser);
 
-		SimpleLogin.app.switchMainView('SimpleLogin.view.Dashboard');
+		SimpleLogin.app.switchMainView('SimpleLogin.view.Dashboard', {
+			username: savedCurrentUser.get('name')
+		});
 	}
 });

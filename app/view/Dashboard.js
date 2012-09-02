@@ -7,19 +7,34 @@
  */
 Ext.define('SimpleLogin.view.Dashboard', {
 	extend: 'Ext.Panel',
-	config: {
-		items: [{
+
+	xtype: 'dashboard',
+
+	requires: [
+		'Ext.TitleBar'
+	],
+
+	initialize: function() {
+		var me = this,
+			config = me.getInitialConfig(),
+			username = config.username,
+			items = [];
+
+		items.push({
 			xtype: 'titlebar',
-			docked: 'top'
+			docked: 'top',
+			title: 'Hello ' + username
 		}, {
 			xtype: 'fieldset',
 			items: [{
-				margin: 20,
+				margin: 10,
 				xtype: 'button',
-				id: 'logOutButton',
+				action: 'logout',
 				ui: 'decline',
 				text: 'Log out'
 			}]
-		}]
+		});
+
+		me.setItems(items);
 	}
 });

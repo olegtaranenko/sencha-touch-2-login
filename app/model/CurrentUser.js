@@ -3,16 +3,17 @@ Ext.define('SimpleLogin.model.CurrentUser', {
 	config: {
 		fields: [
 			{name: 'id', type: 'int'},
-			{name: 'userId', type: 'int'},
+//			{name: 'userId', type: 'int'},
 			{name: 'name', type: 'string'},
 			{name: 'email', type: 'string'},
 			{name: 'locale', type: 'auto'},
-			{name: 'timezone', type: 'auto'}
+			{name: 'timezone', type: 'auto'},
+			{name: 'loginTime', type: 'int'}
 		],
 
 		proxy: {
 			type: 'localstorage',
-			id: 'current-user-data'
+			id: 'simple-login-data'
 		}
 	}
 });

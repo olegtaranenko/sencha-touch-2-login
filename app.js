@@ -1,6 +1,8 @@
 Ext.application({
 	name: 'SimpleLogin',
 
+	sessionTimeout: 1000 * 60 * 60 * 12, // 12 hours
+
 	requires: [
 		'Ext.MessageBox'
 	],
@@ -18,7 +20,10 @@ Ext.application({
 	],
 
 
-	views: ['LoginView'],
+	views: [
+		'LoginView',
+		'Dashboard'
+	],
 
 	icon: {
 		'57': 'resources/icons/Icon.png',
@@ -38,14 +43,13 @@ Ext.application({
 		'1496x2048': 'resources/startup/1496x2048.png'
 	},
 
-	switchMainView: function(newView) {
-		if (this.currentMainView != false) {
-			Ext.Viewport.remove(this.currentMainView);
+	switchMainView: function(newView, config) {
+		if (this.currentView != false) {
+			Ext.Viewport.remove(this.currentView);
 		}
 
-		this.currentMainView = Ext.create(newView);
-		Ext.Viewport.add(this.currentMainView);
-		Ext.fly('appLoadingIndicator').destroy();
+		this.currentView = Ext.create(newView, config);
+		Ext.Viewport.add(this.currentView);
 	},
 
 	onUpdated: function() {
